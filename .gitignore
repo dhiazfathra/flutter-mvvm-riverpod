@@ -32,6 +32,9 @@ doc/api/
 .worktrees/
 worktrees/
 
+# Generated files
+*.g.dart
+
 # Misc
 docs/s*
 .DS_Store
