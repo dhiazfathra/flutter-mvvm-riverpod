@@ -31,3 +31,6 @@ doc/api/
 # Worktrees
 .worktrees/
 worktrees/
+
+# Misc
+docs/s*
