@@ -137,7 +137,7 @@ jobs:
         run: flutter pub get
 
       - name: Run metrics
-        run: dart run dart_code_metrics:metrics lib/
+        run: dart run dart_code_linter:metrics analyze lib
 
   security:
     runs-on: ubuntu-latest
