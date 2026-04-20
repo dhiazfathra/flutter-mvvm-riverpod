@@ -160,9 +160,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     return Container(
       width: 328,
       padding: const EdgeInsets.only(top: 17),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
             'Halo, Selamat Datang',
             style: TextStyle(
