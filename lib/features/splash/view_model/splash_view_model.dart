@@ -2,8 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/app_config.dart';
 import '../../auth/view_model/auth_view_model.dart';
 
-final splashViewModelProvider =
-    StateNotifierProvider<SplashViewModel, SplashState>((ref) {
+final splashViewModelProvider = StateNotifierProvider<SplashViewModel, SplashState>((ref) {
   return SplashViewModel(ref);
 });
 
@@ -72,12 +71,12 @@ class SplashViewModel extends StateNotifier<SplashState> {
   }
 
   Future<AppConfig> _loadAppConfig() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     return AppConfig.defaultConfig;
   }
 
   Future<Map<String, bool>> _loadFeatureFlags() async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future<void>.delayed(const Duration(milliseconds: 300));
     return {
       'is_home_enabled': true,
       'is_payment_enabled': false,
@@ -86,7 +85,7 @@ class SplashViewModel extends StateNotifier<SplashState> {
   }
 
   Future<String?> _loadAnnouncement() async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future<void>.delayed(const Duration(milliseconds: 200));
     return null;
   }
 

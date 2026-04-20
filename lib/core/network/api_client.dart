@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'dio_client.dart';
 
 class ApiClient {
@@ -6,7 +7,7 @@ class ApiClient {
   ApiClient(this._dioClient);
 
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final response = await _dioClient.post('/auth/login', data: {
+    final Response<dynamic> response = await _dioClient.post('/auth/login', data: {
       'email': email,
       'password': password,
     });
@@ -14,21 +15,21 @@ class ApiClient {
   }
 
   Future<void> logout() async {
-    await _dioClient.post('/auth/logout');
+    await _dioClient.post<void>('/auth/logout');
   }
 
   Future<Map<String, dynamic>> getAppConfig() async {
-    final response = await _dioClient.get('/config/app');
+    final Response<dynamic> response = await _dioClient.get('/config/app');
     return response.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> getFeatureFlags() async {
-    final response = await _dioClient.get('/feature-flags');
+    final Response<dynamic> response = await _dioClient.get('/feature-flags');
     return response.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> getAnnouncement() async {
-    final response = await _dioClient.get('/announcement');
+    final Response<dynamic> response = await _dioClient.get('/announcement');
     return response.data as Map<String, dynamic>;
   }
 }

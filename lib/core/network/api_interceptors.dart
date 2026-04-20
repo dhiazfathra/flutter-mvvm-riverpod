@@ -8,8 +8,7 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor(this._secureStorage, this._dio);
 
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final token = await _secureStorage.getAccessToken();
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -18,7 +17,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
       try {
         final refreshed = await _refreshToken();
@@ -38,7 +37,7 @@ class AuthInterceptor extends Interceptor {
     if (refreshToken == null) return false;
 
     try {
-      final response = await _dio.post(
+      final Response<dynamic> response = await _dio.post<dynamic>(
         '/auth/refresh',
         data: {'refresh_token': refreshToken},
         options: Options(headers: {}),
@@ -46,9 +45,13 @@ class AuthInterceptor extends Interceptor {
 
       if (response.statusCode == 200) {
         final data = response.data as Map<String, dynamic>;
-        await _secureStorage.setAccessToken(data['access_token']);
-        if (data['refresh_token'] != null) {
-          await _secureStorage.setRefreshToken(data['refresh_token']);
+        final accessToken = data['access_token'] as String?;
+        if (accessToken != null) {
+          await _secureStorage.setAccessToken(accessToken);
+        }
+        final newRefreshToken = data['refresh_token'] as String?;
+        if (newRefreshToken != null) {
+          await _secureStorage.setRefreshToken(newRefreshToken);
         }
         return true;
       }
@@ -56,7 +59,7 @@ class AuthInterceptor extends Interceptor {
     return false;
   }
 
-  Future<Response> _retry(RequestOptions requestOptions) async {
+  Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
     final token = await _secureStorage.getAccessToken();
     requestOptions.headers['Authorization'] = 'Bearer $token';
     return _dio.fetch(requestOptions);

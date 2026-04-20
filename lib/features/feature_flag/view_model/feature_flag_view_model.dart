@@ -37,7 +37,7 @@ class FeatureFlagViewModel extends StateNotifier<FeatureFlagState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      await Future.delayed(const Duration(milliseconds: 300));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
       final flags = Map<String, bool>.from(AppConstants.defaultFeatureFlags);
 
       state = state.copyWith(

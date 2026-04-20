@@ -36,8 +36,7 @@ class AuthState {
 
 final secureStorageProvider = Provider<SecureStorage>((ref) => SecureStorage());
 
-final authViewModelProvider =
-    StateNotifierProvider<AuthViewModel, AuthState>((ref) {
+final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((ref) {
   return AuthViewModel(ref.watch(secureStorageProvider));
 });
 
@@ -63,7 +62,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      await Future.delayed(const Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 1));
 
       const response = AuthResponse(
         accessToken: 'mock_access_token',
