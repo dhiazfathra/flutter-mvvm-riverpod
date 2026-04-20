@@ -47,23 +47,28 @@ class PushNotificationViewModel extends Notifier<PushNotificationState> {
     }
   }
 
-  void _handleForegroundMessage(RemoteMessage message) {}
+  void _handleForegroundMessage(RemoteMessage message) {
+    // Handle foreground messages
+  }
 
-  static Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
+  static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
+    // Handle background messages
+  }
 
   Future<String?> getToken() async {
     if (state.token == null) {
       final String? token = await _firebaseMessaging.getToken();
       state = state.copyWith(token: token);
     }
+
     return state.token;
   }
 
-  Future<void> subscribeToTopic(String topic) async {
-    await _firebaseMessaging.subscribeToTopic(topic);
+  Future<void> subscribeToTopic(String topic) {
+    return _firebaseMessaging.subscribeToTopic(topic);
   }
 
-  Future<void> unsubscribeFromTopic(String topic) async {
-    await _firebaseMessaging.unsubscribeFromTopic(topic);
+  Future<void> unsubscribeFromTopic(String topic) {
+    return _firebaseMessaging.unsubscribeFromTopic(topic);
   }
 }

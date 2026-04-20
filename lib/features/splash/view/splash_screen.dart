@@ -37,10 +37,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     if (state.needsUpdate) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please update the app')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Please update the app')));
       }
+
       return;
     }
 

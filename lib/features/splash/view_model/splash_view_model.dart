@@ -70,21 +70,25 @@ class SplashViewModel extends Notifier<SplashState> {
 
   Future<AppConfig> _loadAppConfig() async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
+
     return AppConfig.defaultConfig;
   }
 
   Future<Map<String, bool>> _loadFeatureFlags() async {
     await Future<void>.delayed(const Duration(milliseconds: 300));
+
     return {'is_home_enabled': true, 'is_payment_enabled': false, 'is_chat_enabled': false};
   }
 
   Future<String?> _loadAnnouncement() async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
+
     return null;
   }
 
   bool isLoggedIn() {
     final AuthState authState = _ref.read(authViewModelProvider);
+
     return authState.isLoggedIn;
   }
 }

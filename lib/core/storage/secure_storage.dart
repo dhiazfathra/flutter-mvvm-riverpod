@@ -13,59 +13,67 @@ class SecureStorage {
 
   final FlutterSecureStorage _storage;
 
-  Future<void> setAccessToken(String token) async {
-    await _storage.write(key: AppConstants.accessTokenKey, value: token);
+  Future<void> setAccessToken(String token) {
+    return _storage.write(key: AppConstants.accessTokenKey, value: token);
   }
 
-  Future<String?> getAccessToken() async {
+  Future<String?> getAccessToken() {
     return _storage.read(key: AppConstants.accessTokenKey);
   }
 
-  Future<void> setRefreshToken(String token) async {
-    await _storage.write(key: AppConstants.refreshTokenKey, value: token);
+  Future<void> setRefreshToken(String token) {
+    return _storage.write(key: AppConstants.refreshTokenKey, value: token);
   }
 
-  Future<String?> getRefreshToken() async {
+  Future<String?> getRefreshToken() {
     return _storage.read(key: AppConstants.refreshTokenKey);
   }
 
-  Future<void> setUserId(String userId) async {
-    await _storage.write(key: AppConstants.userIdKey, value: userId);
+  Future<void> setUserId(String userId) {
+    return _storage.write(key: AppConstants.userIdKey, value: userId);
   }
 
-  Future<String?> getUserId() async {
+  Future<String?> getUserId() {
     return _storage.read(key: AppConstants.userIdKey);
   }
 
-  Future<void> setUserEmail(String email) async {
-    await _storage.write(key: AppConstants.userEmailKey, value: email);
+  Future<void> setUserEmail(String email) {
+    return _storage.write(key: AppConstants.userEmailKey, value: email);
   }
 
-  Future<String?> getUserEmail() async {
+  Future<String?> getUserEmail() {
     return _storage.read(key: AppConstants.userEmailKey);
   }
 
-  Future<void> setFeatureFlags(String flagsJson) async {
-    await _storage.write(key: AppConstants.featureFlagsKey, value: flagsJson);
+  Future<void> setFeatureFlags(String flagsJson) {
+    return _storage.write(key: AppConstants.featureFlagsKey, value: flagsJson);
   }
 
-  Future<String?> getFeatureFlags() async {
+  Future<String?> getFeatureFlags() {
     return _storage.read(key: AppConstants.featureFlagsKey);
   }
 
-  Future<void> clearAuth() async {
-    await _storage.delete(key: AppConstants.accessTokenKey);
-    await _storage.delete(key: AppConstants.refreshTokenKey);
-    await _storage.delete(key: AppConstants.userIdKey);
-    await _storage.delete(key: AppConstants.userEmailKey);
+  Future<void> clearAuth() {
+    return _storage
+        .delete(key: AppConstants.accessTokenKey)
+        .then((_) {
+          return _storage.delete(key: AppConstants.refreshTokenKey);
+        })
+        .then((_) {
+          return _storage.delete(key: AppConstants.userIdKey);
+        })
+        .then((_) {
+          return _storage.delete(key: AppConstants.userEmailKey);
+        });
   }
 
-  Future<void> clearAll() async {
-    await _storage.deleteAll();
+  Future<void> clearAll() {
+    return _storage.deleteAll();
   }
 
   Future<bool> isLoggedIn() async {
     final String? token = await getAccessToken();
+
     return token != null && token.isNotEmpty;
   }
 }

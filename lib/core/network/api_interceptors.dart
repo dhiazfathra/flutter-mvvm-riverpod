@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 
 import '../storage/secure_storage.dart';
 
-class AuthInterceptor extends Interceptor {
-  AuthInterceptor(this._secureStorage, this._dio);
+class ApiInterceptors extends Interceptor {
+  ApiInterceptors(this._secureStorage, this._dio);
   final SecureStorage _secureStorage;
 
   final Dio _dio;
@@ -23,7 +23,8 @@ class AuthInterceptor extends Interceptor {
       try {
         final bool refreshed = await _refreshToken();
         if (refreshed) {
-          final Response<dynamic> retryResponse = await _retry(err.requestOptions);
+          final Response<Object?> retryResponse = await _retry(err.requestOptions);
+
           return handler.resolve(retryResponse);
         }
       } catch (e) {
@@ -40,7 +41,7 @@ class AuthInterceptor extends Interceptor {
     }
 
     try {
-      final Response<dynamic> response = await _dio.post<dynamic>(
+      final Response<Object?> response = await _dio.post<Object?>(
         '/auth/refresh',
         data: {'refresh_token': refreshToken},
         options: Options(headers: {}),
@@ -56,15 +57,18 @@ class AuthInterceptor extends Interceptor {
         if (newRefreshToken != null) {
           await _secureStorage.setRefreshToken(newRefreshToken);
         }
+
         return true;
       }
     } catch (_) {}
+
     return false;
   }
 
-  Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+  Future<Response<Object?>> _retry(RequestOptions requestOptions) async {
     final String? token = await _secureStorage.getAccessToken();
     requestOptions.headers['Authorization'] = 'Bearer $token';
+
     return _dio.fetch(requestOptions);
   }
 }

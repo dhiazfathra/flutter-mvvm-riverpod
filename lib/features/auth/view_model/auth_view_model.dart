@@ -42,6 +42,7 @@ class AuthViewModel extends Notifier<AuthState> {
   @override
   AuthState build() {
     _checkAuthStatus();
+
     return const AuthState();
   }
 
@@ -51,6 +52,7 @@ class AuthViewModel extends Notifier<AuthState> {
     final bool isLoggedIn = await _secureStorage.isLoggedIn();
     final String? userId = await _secureStorage.getUserId();
     final String? email = await _secureStorage.getUserEmail();
+
     state = state.copyWith(isLoggedIn: isLoggedIn, userId: userId, email: email);
   }
 
@@ -82,6 +84,7 @@ class AuthViewModel extends Notifier<AuthState> {
       return true;
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
+
       return false;
     }
   }

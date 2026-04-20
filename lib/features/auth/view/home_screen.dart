@@ -17,8 +17,8 @@ class HomeScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await authViewModel.logout();
+            onPressed: () {
+              authViewModel.logout();
             },
           ),
         ],
@@ -28,10 +28,7 @@ class HomeScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Welcome Home!'),
-            if (authState.email != null) ...[
-              const SizedBox(height: 8),
-              Text(authState.email!),
-            ],
+            if (authState.email != null) ...[const SizedBox(height: 8), Text(authState.email!)],
           ],
         ),
       ),

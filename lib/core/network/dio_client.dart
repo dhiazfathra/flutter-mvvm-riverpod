@@ -6,15 +6,17 @@ import 'api_interceptors.dart';
 
 class DioClient {
   DioClient({required SecureStorage secureStorage})
-      : _secureStorage = secureStorage,
-        _dio = Dio(BaseOptions(
+    : _secureStorage = secureStorage,
+      _dio = Dio(
+        BaseOptions(
           baseUrl: AppConstants.baseUrl,
           connectTimeout: AppConstants.connectTimeout,
           receiveTimeout: AppConstants.receiveTimeout,
           headers: {'Content-Type': 'application/json'},
-        )) {
+        ),
+      ) {
     _dio.interceptors.addAll([
-      AuthInterceptor(_secureStorage, _dio),
+      ApiInterceptors(_secureStorage, _dio),
       LogInterceptor(requestBody: true, responseBody: true),
     ]);
   }
@@ -34,7 +36,7 @@ class DioClient {
 
   Future<Response<T>> post<T>(
     String path, {
-    dynamic data,
+    Object? data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
@@ -43,7 +45,7 @@ class DioClient {
 
   Future<Response<T>> put<T>(
     String path, {
-    dynamic data,
+    Object? data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
@@ -52,7 +54,7 @@ class DioClient {
 
   Future<Response<T>> delete<T>(
     String path, {
-    dynamic data,
+    Object? data,
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
