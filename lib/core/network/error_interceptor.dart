@@ -69,7 +69,7 @@ extension DioExceptionExtension on DioException {
     Object? error,
     DioExceptionType? type,
     RequestOptions? requestOptions,
-    Response? response,
+    Response<dynamic>? response,
     String? message,
   }) {
     return DioException(
