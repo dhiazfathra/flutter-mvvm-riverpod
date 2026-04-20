@@ -35,3 +35,4 @@ worktrees/
 # Misc
 docs/s*
 .DS_Store
+coverage
