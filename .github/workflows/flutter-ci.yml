@@ -22,9 +22,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.pub-cache
-          key: ${{ runner.os }}-flutter-${{ env.flutter-version }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-3.41.7-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
-            ${{ runner.os }}-flutter-${{ env.flutter-version }}-pub-
+            ${{ runner.os }}-flutter-3.41.7-pub-
 
       - name: Install dependencies
         run: flutter pub get
@@ -47,9 +47,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.pub-cache
-          key: ${{ runner.os }}-flutter-${{ env.flutter-version }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-flutter-3.41.7-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
-            ${{ runner.os }}-flutter-${{ env.flutter-version }}-pub-
+            ${{ runner.os }}-flutter-3.41.7-pub-
 
       - name: Install dependencies
         run: flutter pub get
@@ -61,5 +61,86 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: coverage
-          path: coverage/
+          name: lcov.info
+          path: coverage/lcov.info
+
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.41.7"
+          channel: "stable"
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-3.41.7-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-3.41.7-pub-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check formatting
+        run: flutter format --set-exit-if-changed
+
+  coverage-check:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: lcov.info
+
+      - name: Check coverage
+        uses: VeryGoodOpenSource/flutter-coverage-check-action@v1
+        with:
+          lcov_file: ./lcov.info
+          min_coverage: 70
+
+  metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.41.7"
+          channel: "stable"
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-3.41.7-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-3.41.7-pub-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run metrics
+        run: dart run dart_code_metrics:metrics lib/
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: dart, yaml
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
