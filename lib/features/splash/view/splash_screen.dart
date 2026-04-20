@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../view_model/splash_view_model.dart';
+
 import '../../../core/constants/app_constants.dart';
+import '../view_model/splash_view_model.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -21,14 +22,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Future<void> _initialize() async {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
 
-    final viewModel = ref.read(splashViewModelProvider.notifier);
+    final SplashViewModel viewModel = ref.read(splashViewModelProvider.notifier);
     await viewModel.initialize();
 
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
 
-    final state = ref.read(splashViewModelProvider);
+    final SplashState state = ref.read(splashViewModelProvider);
 
     if (state.needsUpdate) {
       if (mounted) {
@@ -39,7 +44,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       return;
     }
 
-    final isLoggedIn = viewModel.isLoggedIn();
+    final bool isLoggedIn = viewModel.isLoggedIn();
     if (isLoggedIn) {
       context.go(AppConstants.homeRoute);
     } else {
@@ -49,7 +54,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final splashState = ref.watch(splashViewModelProvider);
+    final SplashState splashState = ref.watch(splashViewModelProvider);
 
     return Scaffold(
       body: Center(

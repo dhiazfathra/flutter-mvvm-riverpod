@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_mvvm_riverpod/app.dart';
 import 'package:flutter_mvvm_riverpod/features/push_notification/view_model/push_notification_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 class MockPushNotificationViewModel extends StateNotifier<PushNotificationState>
     implements PushNotificationViewModel {

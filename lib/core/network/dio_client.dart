@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
+
 import '../constants/app_constants.dart';
 import '../storage/secure_storage.dart';
 import 'api_interceptors.dart';
 
 class DioClient {
-  final Dio _dio;
-  final SecureStorage _secureStorage;
-
   DioClient({required SecureStorage secureStorage})
       : _secureStorage = secureStorage,
         _dio = Dio(BaseOptions(
@@ -20,6 +18,9 @@ class DioClient {
       LogInterceptor(requestBody: true, responseBody: true),
     ]);
   }
+
+  final Dio _dio;
+  final SecureStorage _secureStorage;
 
   Dio get dio => _dio;
 

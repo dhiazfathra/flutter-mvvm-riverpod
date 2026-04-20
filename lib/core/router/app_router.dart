@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../constants/app_constants.dart';
-import '../../features/splash/view/splash_screen.dart';
-import '../../features/auth/view/login_screen.dart';
+
 import '../../features/auth/view/home_screen.dart';
+import '../../features/auth/view/login_screen.dart';
+import '../../features/splash/view/splash_screen.dart';
+import '../constants/app_constants.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(

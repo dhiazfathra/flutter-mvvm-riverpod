@@ -1,6 +1,6 @@
+import 'package:flutter_mvvm_riverpod/core/storage/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_mvvm_riverpod/core/storage/secure_storage.dart';
 
 class MockFlutterSecureStorage extends FlutterSecureStorage {
   final Map<String, String> _storage = {};
@@ -92,22 +92,22 @@ class MockFlutterSecureStorage extends FlutterSecureStorage {
   void unregisterListener({required String key, required void Function(String?) listener}) {}
 
   @override
-  AndroidOptions get aOptions => const AndroidOptions();
+  AndroidOptions get aOptions => AndroidOptions.defaultOptions;
 
   @override
-  IOSOptions get iOptions => const IOSOptions();
+  IOSOptions get iOptions => IOSOptions.defaultOptions;
 
   @override
-  LinuxOptions get lOptions => const LinuxOptions();
+  LinuxOptions get lOptions => LinuxOptions.defaultOptions;
 
   @override
-  MacOsOptions get mOptions => const MacOsOptions();
+  MacOsOptions get mOptions => MacOsOptions.defaultOptions;
 
   @override
-  WindowsOptions get wOptions => const WindowsOptions();
+  WindowsOptions get wOptions => WindowsOptions.defaultOptions;
 
   @override
-  WebOptions get webOptions => const WebOptions();
+  WebOptions get webOptions => WebOptions.defaultOptions;
 
   @override
   Future<bool> isCupertinoProtectedDataAvailable() async {
@@ -127,7 +127,7 @@ void main() {
   group('SecureStorage', () {
     test('setAccessToken and getAccessToken should work', () async {
       await secureStorage.setAccessToken('test_token');
-      final token = await secureStorage.getAccessToken();
+      final String? token = await secureStorage.getAccessToken();
       expect(token, 'test_token');
     });
 
@@ -147,13 +147,13 @@ void main() {
 
     test('isLoggedIn should return true when token exists', () async {
       await secureStorage.setAccessToken('valid_token');
-      final isLoggedIn = await secureStorage.isLoggedIn();
+      final bool isLoggedIn = await secureStorage.isLoggedIn();
       expect(isLoggedIn, true);
     });
 
     test('isLoggedIn should return false when token is empty', () async {
       await secureStorage.setAccessToken('');
-      final isLoggedIn = await secureStorage.isLoggedIn();
+      final bool isLoggedIn = await secureStorage.isLoggedIn();
       expect(isLoggedIn, false);
     });
   });

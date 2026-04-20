@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/constants/app_constants.dart';
 
 final featureFlagViewModelProvider =
@@ -7,15 +8,15 @@ final featureFlagViewModelProvider =
 });
 
 class FeatureFlagState {
-  final Map<String, bool> flags;
-  final bool isLoading;
-  final String? error;
-
   const FeatureFlagState({
     this.flags = const {},
     this.isLoading = false,
     this.error,
   });
+
+  final Map<String, bool> flags;
+  final bool isLoading;
+  final String? error;
 
   FeatureFlagState copyWith({
     Map<String, bool>? flags,

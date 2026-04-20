@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_mvvm_riverpod/features/auth/model/auth_response.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AuthResponse', () {
@@ -27,7 +27,7 @@ void main() {
         email: 'test@example.com',
       );
 
-      final json = response.toJson();
+      final Map<String, dynamic> json = response.toJson();
 
       expect(json['accessToken'], 'token123');
       expect(json['refreshToken'], 'refresh123');

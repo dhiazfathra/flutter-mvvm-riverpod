@@ -1,7 +1,7 @@
+import 'package:flutter_mvvm_riverpod/core/storage/secure_storage.dart';
+import 'package:flutter_mvvm_riverpod/features/auth/view_model/auth_view_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_mvvm_riverpod/features/auth/view_model/auth_view_model.dart';
-import 'package:flutter_mvvm_riverpod/core/storage/secure_storage.dart';
 
 class MockFlutterSecureStorage extends FlutterSecureStorage {
   final Map<String, String> _storage = {};
@@ -76,7 +76,7 @@ void main() {
     });
 
     test('login should set isLoggedIn to true', () async {
-      final result = await authViewModel.login('test@example.com', 'password');
+      final bool result = await authViewModel.login('test@example.com', 'password');
       expect(result, true);
       expect(authViewModel.state.isLoggedIn, true);
     });

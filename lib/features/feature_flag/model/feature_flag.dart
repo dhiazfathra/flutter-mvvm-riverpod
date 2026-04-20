@@ -4,9 +4,6 @@ part 'feature_flag.g.dart';
 
 @JsonSerializable()
 class FeatureFlag {
-  final String key;
-  final bool value;
-
   const FeatureFlag({
     required this.key,
     required this.value,
@@ -14,14 +11,14 @@ class FeatureFlag {
 
   factory FeatureFlag.fromJson(Map<String, dynamic> json) => _$FeatureFlagFromJson(json);
 
+  final String key;
+  final bool value;
+
   Map<String, dynamic> toJson() => _$FeatureFlagToJson(this);
 }
 
 @JsonSerializable()
 class FeatureFlagsResponse {
-  final List<FeatureFlag> flags;
-  final DateTime? lastUpdated;
-
   const FeatureFlagsResponse({
     required this.flags,
     this.lastUpdated,
@@ -29,6 +26,9 @@ class FeatureFlagsResponse {
 
   factory FeatureFlagsResponse.fromJson(Map<String, dynamic> json) =>
       _$FeatureFlagsResponseFromJson(json);
+
+  final List<FeatureFlag> flags;
+  final DateTime? lastUpdated;
 
   Map<String, dynamic> toJson() => _$FeatureFlagsResponseToJson(this);
 }

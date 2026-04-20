@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../view_model/auth_view_model.dart';
+
 import '../../../core/constants/app_constants.dart';
+import '../view_model/auth_view_model.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -11,8 +12,7 @@ class LoginScreen extends ConsumerStatefulWidget {
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen>
-    with SingleTickerProviderStateMixin {
+class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProviderStateMixin {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -34,8 +34,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authViewModelProvider);
-    final authViewModel = ref.read(authViewModelProvider.notifier);
+    final AuthState authState = ref.watch(authViewModelProvider);
+    final AuthViewModel authViewModel = ref.read(authViewModelProvider.notifier);
 
     ref.listen(authViewModelProvider, (previous, next) {
       if (next.isLoggedIn) {
@@ -107,7 +107,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: const Color(0xFF170E2B).withValues(alpha: 0.35),
-                    width: 1,
                   ),
                   borderRadius: BorderRadius.circular(2.67),
                 ),
@@ -144,7 +143,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
               labelColor: const Color(0xFF01AFAF),
               unselectedLabelColor: const Color(0xFF333333),
               indicatorColor: const Color(0xFF01AFAF),
-              indicatorWeight: 2,
               tabs: const [
                 Tab(text: 'Masuk'),
                 Tab(text: 'Daftar'),
@@ -188,7 +186,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     );
   }
 
-  Widget _buildFormSection(authState, authViewModel) {
+  Widget _buildFormSection(AuthState authState, AuthViewModel authViewModel) {
     return Container(
       width: 328,
       padding: const EdgeInsets.only(top: 16),

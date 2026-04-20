@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../view_model/auth_view_model.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -7,8 +8,8 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authViewModelProvider);
-    final authViewModel = ref.read(authViewModelProvider.notifier);
+    final AuthState authState = ref.watch(authViewModelProvider);
+    final AuthViewModel authViewModel = ref.read(authViewModelProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(

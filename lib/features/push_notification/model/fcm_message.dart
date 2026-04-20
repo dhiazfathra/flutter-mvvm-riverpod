@@ -4,12 +4,6 @@ part 'fcm_message.g.dart';
 
 @JsonSerializable()
 class FcmMessage {
-  final String? title;
-  final String? body;
-  final String? data;
-  final Map<String, dynamic>? androidNotification;
-  final Map<String, dynamic>? aps;
-
   const FcmMessage({
     this.title,
     this.body,
@@ -19,6 +13,12 @@ class FcmMessage {
   });
 
   factory FcmMessage.fromJson(Map<String, dynamic> json) => _$FcmMessageFromJson(json);
+
+  final String? title;
+  final String? body;
+  final String? data;
+  final Map<String, dynamic>? androidNotification;
+  final Map<String, dynamic>? aps;
 
   Map<String, dynamic> toJson() => _$FcmMessageToJson(this);
 }

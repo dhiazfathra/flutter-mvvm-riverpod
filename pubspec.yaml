@@ -1,6 +1,6 @@
 name: flutter_mvvm_riverpod
 description: Flutter MVVM Riverpod template with auth, feature flags, and FCM
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -23,7 +23,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   build_runner: ^2.4.8
   json_serializable: ^6.7.1
-  dart_code_metrics: ^5.7.6
+  # dart_code_metrics: ^5.7.6
 
 flutter:
   uses-material-design: true

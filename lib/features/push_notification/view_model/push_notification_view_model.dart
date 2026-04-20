@@ -7,15 +7,15 @@ final pushNotificationViewModelProvider =
 });
 
 class PushNotificationState {
-  final String? token;
-  final bool isInitialized;
-  final String? error;
-
   const PushNotificationState({
     this.token,
     this.isInitialized = false,
     this.error,
   });
+
+  final String? token;
+  final bool isInitialized;
+  final String? error;
 
   PushNotificationState copyWith({
     String? token,
@@ -31,25 +31,16 @@ class PushNotificationState {
 }
 
 class PushNotificationViewModel extends StateNotifier<PushNotificationState> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
   PushNotificationViewModel() : super(const PushNotificationState());
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initialize() async {
     try {
-      final settings = await _firebaseMessaging.requestPermission(
-        alert: true,
-        announcement: false,
-        badge: true,
-        carPlay: false,
-        criticalAlert: false,
-        provisional: false,
-        sound: true,
-      );
+      final NotificationSettings settings = await _firebaseMessaging.requestPermission();
 
       if (settings.authorizationStatus == AuthorizationStatus.authorized ||
           settings.authorizationStatus == AuthorizationStatus.provisional) {
-        final token = await _firebaseMessaging.getToken();
+        final String? token = await _firebaseMessaging.getToken();
         state = state.copyWith(
           token: token,
           isInitialized: true,
@@ -76,7 +67,7 @@ class PushNotificationViewModel extends StateNotifier<PushNotificationState> {
 
   Future<String?> getToken() async {
     if (state.token == null) {
-      final token = await _firebaseMessaging.getToken();
+      final String? token = await _firebaseMessaging.getToken();
       state = state.copyWith(token: token);
     }
     return state.token;

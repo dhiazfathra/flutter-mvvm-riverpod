@@ -1,19 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/app_config.dart';
+
 import '../../auth/view_model/auth_view_model.dart';
+import '../model/app_config.dart';
 
 final splashViewModelProvider = StateNotifierProvider<SplashViewModel, SplashState>((ref) {
   return SplashViewModel(ref);
 });
 
 class SplashState {
-  final bool isLoading;
-  final AppConfig? appConfig;
-  final Map<String, bool> featureFlags;
-  final String? announcement;
-  final bool needsUpdate;
-  final String? error;
-
   const SplashState({
     this.isLoading = true,
     this.appConfig,
@@ -22,6 +16,12 @@ class SplashState {
     this.needsUpdate = false,
     this.error,
   });
+  final bool isLoading;
+  final AppConfig? appConfig;
+  final Map<String, bool> featureFlags;
+  final String? announcement;
+  final bool needsUpdate;
+  final String? error;
 
   SplashState copyWith({
     bool? isLoading,
@@ -43,17 +43,17 @@ class SplashState {
 }
 
 class SplashViewModel extends StateNotifier<SplashState> {
-  final Ref _ref;
-
   SplashViewModel(this._ref) : super(const SplashState());
+
+  final Ref _ref;
 
   Future<void> initialize() async {
     try {
-      final appConfig = await _loadAppConfig();
+      final AppConfig appConfig = await _loadAppConfig();
       const currentVersion = 1;
-      final needsUpdate = appConfig.minVersion > currentVersion;
-      final flags = await _loadFeatureFlags();
-      final announcement = await _loadAnnouncement();
+      final bool needsUpdate = appConfig.minVersion > currentVersion;
+      final Map<String, bool> flags = await _loadFeatureFlags();
+      final String? announcement = await _loadAnnouncement();
 
       state = state.copyWith(
         isLoading: false,

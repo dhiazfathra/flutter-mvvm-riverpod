@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_mvvm_riverpod/core/network/dio_client.dart';
 import 'package:flutter_mvvm_riverpod/core/storage/secure_storage.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late DioClient dioClient;

@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_mvvm_riverpod/core/errors/exceptions.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppExceptions', () {

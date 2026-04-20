@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
 import 'core/router/app_router.dart';
 import 'features/feature_flag/view_model/feature_flag_view_model.dart';
 import 'features/push_notification/view_model/push_notification_view_model.dart';
@@ -21,15 +23,19 @@ class _AppState extends ConsumerState<App> {
   }
 
   Future<void> _initializeApp() async {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     await ref.read(featureFlagViewModelProvider.notifier).loadFlags();
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
     await ref.read(pushNotificationViewModelProvider.notifier).initialize();
   }
 
   @override
   Widget build(BuildContext context) {
-    final router = ref.watch(routerProvider);
+    final GoRouter router = ref.watch(routerProvider);
 
     return MaterialApp.router(
       title: 'E-Commerce App',

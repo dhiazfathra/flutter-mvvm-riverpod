@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+
 import 'dio_client.dart';
 
 class ApiClient {
-  final DioClient _dioClient;
-
   ApiClient(this._dioClient);
+
+  final DioClient _dioClient;
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     final Response<dynamic> response = await _dioClient.post('/auth/login', data: {

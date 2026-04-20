@@ -1,14 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/storage/secure_storage.dart';
 import '../model/auth_response.dart';
 
 class AuthState {
-  final bool isLoggedIn;
-  final bool isLoading;
-  final String? error;
-  final String? userId;
-  final String? email;
-
   const AuthState({
     this.isLoggedIn = false,
     this.isLoading = false,
@@ -16,6 +11,11 @@ class AuthState {
     this.userId,
     this.email,
   });
+  final bool isLoggedIn;
+  final bool isLoading;
+  final String? error;
+  final String? userId;
+  final String? email;
 
   AuthState copyWith({
     bool? isLoggedIn,
@@ -41,16 +41,16 @@ final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((r
 });
 
 class AuthViewModel extends StateNotifier<AuthState> {
-  final SecureStorage _secureStorage;
-
   AuthViewModel(this._secureStorage) : super(const AuthState()) {
     _checkAuthStatus();
   }
 
+  final SecureStorage _secureStorage;
+
   Future<void> _checkAuthStatus() async {
-    final isLoggedIn = await _secureStorage.isLoggedIn();
-    final userId = await _secureStorage.getUserId();
-    final email = await _secureStorage.getUserEmail();
+    final bool isLoggedIn = await _secureStorage.isLoggedIn();
+    final String? userId = await _secureStorage.getUserId();
+    final String? email = await _secureStorage.getUserEmail();
     state = state.copyWith(
       isLoggedIn: isLoggedIn,
       userId: userId,
@@ -59,7 +59,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
   }
 
   Future<bool> login(String email, String password) async {
-    state = state.copyWith(isLoading: true, error: null);
+    state = state.copyWith(isLoading: true);
 
     try {
       await Future<void>.delayed(const Duration(seconds: 1));

@@ -1,15 +1,16 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import '../constants/app_constants.dart';
 
 class SecureStorage {
-  final FlutterSecureStorage _storage;
-
   SecureStorage({FlutterSecureStorage? storage})
       : _storage = storage ??
             const FlutterSecureStorage(
               aOptions: AndroidOptions(encryptedSharedPreferences: true),
               iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
             );
+
+  final FlutterSecureStorage _storage;
 
   // Token operations
   Future<void> setAccessToken(String token) async {
@@ -69,7 +70,7 @@ class SecureStorage {
 
   // Check if logged in
   Future<bool> isLoggedIn() async {
-    final token = await getAccessToken();
+    final String? token = await getAccessToken();
     return token != null && token.isNotEmpty;
   }
 }
