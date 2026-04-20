@@ -23,12 +23,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "24"
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-          channel: 'stable'
+          flutter-version: "3.41.7"
+          channel: "stable"
 
       - name: Install dependencies
         run: npm install -g semantic-release @semantic-release/changelog @semantic-release/exec @semantic-release/git conventional-changelog-conventionalcommits
