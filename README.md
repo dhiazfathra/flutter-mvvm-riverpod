@@ -1,17 +1,85 @@
-# flutter_mvvm_riverpod
+# Flutter MVVM Riverpod Template
 
-A new Flutter project.
+A minimal Flutter foundation with MVVM + Riverpod for building e-commerce superapps. Focuses on least boilerplate while implementing DRY and SOLID principles.
+
+## Features
+
+- **Splash Screen** - Version check, feature flags loading, announcement display
+- **Auth** - Login, token storage (flutter_secure_storage), auto-refresh
+- **Feature Flags** - Runtime feature toggles
+- **Push Notifications** - FCM integration
+
+## Architecture
+
+```
+lib/
+├── main.dart              # Entry point
+├── app.dart               # App widget
+├── core/                  # Reusable infrastructure
+│   ├── constants/        # App constants
+│   ├── errors/           # Error types
+│   ├── network/           # Dio HTTP client
+│   ├── router/           # go_router
+│   └── storage/          # Secure storage wrapper
+├── shared/                # Shared widgets
+│   └── widgets/
+└── features/
+    ├── auth/
+    ├── splash/
+    ├── feature_flag/
+    └── push_notification/
+```
+
+## Tech Stack
+
+| Component | Library |
+|-----------|---------|
+| State Management | flutter_riverpod |
+| Routing | go_router |
+| HTTP Client | dio |
+| Secure Storage | flutter_secure_storage |
+| Push | firebase_messaging |
+| Code Gen | json_serializable |
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+```bash
+# Clone
+git clone https://github.com/dhiazfathra/flutter-mvvm-riverpod.git
 
-A few resources to get you started if this is your first Flutter project:
+# Install dependencies
+flutter pub get
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+# Generate code (after modifying .dart files with json_serializable)
+flutter pub run build_runner build --delete-conflicting-outputs
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Run
+flutter run
+
+# Test
+flutter test
+
+# Build web
+flutter build web
+```
+
+## CI/CD
+
+GitHub Actions workflow included in `.github/workflows/`:
+
+```bash
+# Runs on: push to main, pull requests
+# - flutter analyze
+# - flutter test
+```
+
+## Notes
+
+- Uses **model/view/view_model** pattern (not data/domain/presentation)
+- **json_serializable** only - no freezed or riverpod_generator
+- Flat routing (go_router) - until 15+ routes
+- Pure Riverpod - StateProvider, AsyncNotifier, StateNotifier
+
+## License
+
+MIT
