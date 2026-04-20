@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
-import 'features/splash/view_model/splash_view_model.dart';
 import 'features/feature_flag/view_model/feature_flag_view_model.dart';
 import 'features/push_notification/view_model/push_notification_view_model.dart';
 

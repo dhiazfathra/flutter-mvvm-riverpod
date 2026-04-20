@@ -1,14 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/storage/secure_storage.dart';
 import '../model/app_config.dart';
 import '../../auth/view_model/auth_view_model.dart';
 
 final splashViewModelProvider =
     StateNotifierProvider<SplashViewModel, SplashState>((ref) {
-  return SplashViewModel(
-    ref.watch(secureStorageProvider),
-    ref,
-  );
+  return SplashViewModel(ref);
 });
 
 class SplashState {
@@ -48,15 +44,14 @@ class SplashState {
 }
 
 class SplashViewModel extends StateNotifier<SplashState> {
-  final SecureStorage _secureStorage;
   final Ref _ref;
 
-  SplashViewModel(this._secureStorage, this._ref) : super(const SplashState());
+  SplashViewModel(this._ref) : super(const SplashState());
 
   Future<void> initialize() async {
     try {
       final appConfig = await _loadAppConfig();
-      final currentVersion = 1;
+      const currentVersion = 1;
       final needsUpdate = appConfig.minVersion > currentVersion;
       final flags = await _loadFeatureFlags();
       final announcement = await _loadAnnouncement();

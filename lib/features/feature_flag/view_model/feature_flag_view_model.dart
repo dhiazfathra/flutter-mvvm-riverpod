@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/storage/secure_storage.dart';
 import '../../../core/constants/app_constants.dart';
 
 final featureFlagViewModelProvider =
     StateNotifierProvider<FeatureFlagViewModel, FeatureFlagState>((ref) {
-  return FeatureFlagViewModel(SecureStorage());
+  return FeatureFlagViewModel();
 });
 
 class FeatureFlagState {
@@ -32,9 +31,7 @@ class FeatureFlagState {
 }
 
 class FeatureFlagViewModel extends StateNotifier<FeatureFlagState> {
-  final SecureStorage _secureStorage;
-
-  FeatureFlagViewModel(this._secureStorage) : super(const FeatureFlagState());
+  FeatureFlagViewModel() : super(const FeatureFlagState());
 
   Future<void> loadFlags() async {
     state = state.copyWith(isLoading: true);
