@@ -41,10 +41,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       if (next.isLoggedIn) {
         context.go(AppConstants.homeRoute);
       }
-      if (next.error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.error!)),
-        );
+      final String? error = next.error;
+      if (error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
       }
     });
 
@@ -57,10 +56,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                children: [
-                  _buildWelcomeSection(),
-                  _buildFormSection(authState, authViewModel),
-                ],
+                children: [_buildWelcomeSection(), _buildFormSection(authState, authViewModel)],
               ),
             ),
           ),
@@ -89,25 +85,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
           ),
           Row(
             children: [
-              Container(
-                width: 18,
-                height: 12,
-                color: const Color(0xFF170E2B),
-              ),
+              Container(width: 18, height: 12, color: const Color(0xFF170E2B)),
               const SizedBox(width: 6),
-              Container(
-                width: 16,
-                height: 12,
-                color: const Color(0xFF170E2B),
-              ),
+              Container(width: 16, height: 12, color: const Color(0xFF170E2B)),
               const SizedBox(width: 6),
               Container(
                 width: 24,
                 height: 12,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xFF170E2B).withValues(alpha: 0.35),
-                  ),
+                  border: Border.all(color: const Color(0xFF170E2B).withValues(alpha: 0.35)),
                   borderRadius: BorderRadius.circular(2.67),
                 ),
                 child: Align(
@@ -216,18 +202,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                   width: 67,
                   height: 18,
                   decoration: const BoxDecoration(
-                    border: Border(
-                      right: BorderSide(color: Color(0xFFE5E5E5)),
-                    ),
+                    border: Border(right: BorderSide(color: Color(0xFFE5E5E5))),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 16,
-                        height: 12,
-                        color: const Color(0xFFD81F2A),
-                      ),
+                      Container(width: 16, height: 12, color: const Color(0xFFD81F2A)),
                       const SizedBox(width: 4),
                       const Text(
                         '+62',
@@ -240,20 +220,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                     ],
                   ),
                 ),
-                const Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 18,
-                  color: Color(0xFF333333),
-                ),
+                const Icon(Icons.keyboard_arrow_down, size: 18, color: Color(0xFF333333)),
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(fontFamily: 'Poppins', fontSize: 12),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Contoh: 81234567890',
@@ -292,10 +265,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                   child: TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(fontFamily: 'Poppins', fontSize: 12),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Contoh: ••••••••',
@@ -331,16 +301,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
               onPressed: authState.isLoading
                   ? null
                   : () {
-                      authViewModel.login(
-                        _phoneController.text,
-                        _passwordController.text,
-                      );
+                      authViewModel.login(_phoneController.text, _passwordController.text);
                     },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFE2E2E2),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
               child: authState.isLoading
                   ? const CircularProgressIndicator()

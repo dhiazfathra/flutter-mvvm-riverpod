@@ -36,26 +36,22 @@ class AuthState {
 
 final secureStorageProvider = Provider<SecureStorage>((ref) => SecureStorage());
 
-final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((ref) {
-  return AuthViewModel(ref.watch(secureStorageProvider));
-});
+final authViewModelProvider = NotifierProvider<AuthViewModel, AuthState>(AuthViewModel.new);
 
-class AuthViewModel extends StateNotifier<AuthState> {
-  AuthViewModel(this._secureStorage) : super(const AuthState()) {
+class AuthViewModel extends Notifier<AuthState> {
+  @override
+  AuthState build() {
     _checkAuthStatus();
+    return const AuthState();
   }
 
-  final SecureStorage _secureStorage;
+  SecureStorage get _secureStorage => ref.read(secureStorageProvider);
 
   Future<void> _checkAuthStatus() async {
     final bool isLoggedIn = await _secureStorage.isLoggedIn();
     final String? userId = await _secureStorage.getUserId();
     final String? email = await _secureStorage.getUserEmail();
-    state = state.copyWith(
-      isLoggedIn: isLoggedIn,
-      userId: userId,
-      email: email,
-    );
+    state = state.copyWith(isLoggedIn: isLoggedIn, userId: userId, email: email);
   }
 
   Future<bool> login(String email, String password) async {
@@ -85,10 +81,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
       return true;
     } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      );
+      state = state.copyWith(isLoading: false, error: e.toString());
       return false;
     }
   }

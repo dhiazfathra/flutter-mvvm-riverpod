@@ -34,6 +34,11 @@ class _AppState extends ConsumerState<App> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final GoRouter router = ref.watch(routerProvider);
 

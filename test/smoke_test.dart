@@ -4,9 +4,12 @@ import 'package:flutter_mvvm_riverpod/features/push_notification/view_model/push
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class MockPushNotificationViewModel extends StateNotifier<PushNotificationState>
+class MockPushNotificationViewModel extends Notifier<PushNotificationState>
     implements PushNotificationViewModel {
-  MockPushNotificationViewModel() : super(const PushNotificationState());
+  @override
+  PushNotificationState build() {
+    return const PushNotificationState();
+  }
 
   @override
   Future<void> initialize() async {
@@ -28,9 +31,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          pushNotificationViewModelProvider.overrideWith(
-            (ref) => MockPushNotificationViewModel(),
-          ),
+          pushNotificationViewModelProvider.overrideWith(() => MockPushNotificationViewModel()),
         ],
         child: const MaterialApp(home: App()),
       ),

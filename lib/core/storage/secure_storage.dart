@@ -4,15 +4,15 @@ import '../constants/app_constants.dart';
 
 class SecureStorage {
   SecureStorage({FlutterSecureStorage? storage})
-      : _storage = storage ??
-            const FlutterSecureStorage(
-              aOptions: AndroidOptions(encryptedSharedPreferences: true),
-              iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
-            );
+    : _storage =
+          storage ??
+          const FlutterSecureStorage(
+            aOptions: AndroidOptions(encryptedSharedPreferences: true),
+            iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+          );
 
   final FlutterSecureStorage _storage;
 
-  // Token operations
   Future<void> setAccessToken(String token) async {
     await _storage.write(key: AppConstants.accessTokenKey, value: token);
   }
@@ -29,7 +29,6 @@ class SecureStorage {
     return _storage.read(key: AppConstants.refreshTokenKey);
   }
 
-  // User data operations
   Future<void> setUserId(String userId) async {
     await _storage.write(key: AppConstants.userIdKey, value: userId);
   }
@@ -46,7 +45,6 @@ class SecureStorage {
     return _storage.read(key: AppConstants.userEmailKey);
   }
 
-  // Feature flags
   Future<void> setFeatureFlags(String flagsJson) async {
     await _storage.write(key: AppConstants.featureFlagsKey, value: flagsJson);
   }
@@ -55,7 +53,6 @@ class SecureStorage {
     return _storage.read(key: AppConstants.featureFlagsKey);
   }
 
-  // Clear all auth data
   Future<void> clearAuth() async {
     await _storage.delete(key: AppConstants.accessTokenKey);
     await _storage.delete(key: AppConstants.refreshTokenKey);
@@ -63,12 +60,10 @@ class SecureStorage {
     await _storage.delete(key: AppConstants.userEmailKey);
   }
 
-  // Clear all data
   Future<void> clearAll() async {
     await _storage.deleteAll();
   }
 
-  // Check if logged in
   Future<bool> isLoggedIn() async {
     final String? token = await getAccessToken();
     return token != null && token.isNotEmpty;

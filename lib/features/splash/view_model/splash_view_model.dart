@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../model/app_config.dart';
 
-final splashViewModelProvider = StateNotifierProvider<SplashViewModel, SplashState>((ref) {
-  return SplashViewModel(ref);
-});
+final splashViewModelProvider = NotifierProvider<SplashViewModel, SplashState>(SplashViewModel.new);
 
 class SplashState {
   const SplashState({
@@ -42,10 +40,13 @@ class SplashState {
   }
 }
 
-class SplashViewModel extends StateNotifier<SplashState> {
-  SplashViewModel(this._ref) : super(const SplashState());
+class SplashViewModel extends Notifier<SplashState> {
+  @override
+  SplashState build() {
+    return const SplashState();
+  }
 
-  final Ref _ref;
+  Ref get _ref => ref;
 
   Future<void> initialize() async {
     try {
@@ -63,10 +64,7 @@ class SplashViewModel extends StateNotifier<SplashState> {
         needsUpdate: needsUpdate,
       );
     } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      );
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
@@ -77,11 +75,7 @@ class SplashViewModel extends StateNotifier<SplashState> {
 
   Future<Map<String, bool>> _loadFeatureFlags() async {
     await Future<void>.delayed(const Duration(milliseconds: 300));
-    return {
-      'is_home_enabled': true,
-      'is_payment_enabled': false,
-      'is_chat_enabled': false,
-    };
+    return {'is_home_enabled': true, 'is_payment_enabled': false, 'is_chat_enabled': false};
   }
 
   Future<String?> _loadAnnouncement() async {
@@ -90,6 +84,7 @@ class SplashViewModel extends StateNotifier<SplashState> {
   }
 
   bool isLoggedIn() {
-    return _ref.read(authViewModelProvider).isLoggedIn;
+    final AuthState authState = _ref.read(authViewModelProvider);
+    return authState.isLoggedIn;
   }
 }
