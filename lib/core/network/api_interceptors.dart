@@ -48,7 +48,11 @@ class ApiInterceptors extends Interceptor {
       );
 
       if (response.statusCode == 200) {
-        final data = response.data as Map<String, dynamic>;
+        final Object? responseData = response.data;
+        if (responseData is! Map<String, dynamic>) {
+          return false;
+        }
+        final data = responseData;
         final accessToken = data['access_token'] as String?;
         if (accessToken != null) {
           await _secureStorage.setAccessToken(accessToken);
