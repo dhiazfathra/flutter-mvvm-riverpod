@@ -1,0 +1,11 @@
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 10
+    lines-of-code: 50
+    number-of-parameters: 5
+    source-lines-of-code: 100
+  rules:
+    cyclomatic-complexity:
+      - threshold: 10
+    lines-of-code:
+      - threshold: 50
