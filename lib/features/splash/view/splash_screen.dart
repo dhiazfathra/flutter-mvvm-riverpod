@@ -21,6 +21,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Future<void> _initialize() async {
+    if (!mounted) return;
+
     final viewModel = ref.read(splashViewModelProvider.notifier);
     await viewModel.initialize();
 

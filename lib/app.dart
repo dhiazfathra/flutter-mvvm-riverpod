@@ -15,11 +15,15 @@ class _AppState extends ConsumerState<App> {
   @override
   void initState() {
     super.initState();
-    _initializeApp();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeApp();
+    });
   }
 
   Future<void> _initializeApp() async {
+    if (!mounted) return;
     await ref.read(featureFlagViewModelProvider.notifier).loadFlags();
+    if (!mounted) return;
     await ref.read(pushNotificationViewModelProvider.notifier).initialize();
   }
 
