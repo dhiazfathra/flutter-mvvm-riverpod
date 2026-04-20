@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_constants.dart';
+import '../../../shared/widgets/loading_widget.dart';
 import '../view_model/auth_view_model.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -308,14 +309,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
               child: authState.isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    )
+                  ? const LoadingWidget(message: 'Loading...')
                   : const Text(
                       'Lanjutkan',
                       style: TextStyle(
