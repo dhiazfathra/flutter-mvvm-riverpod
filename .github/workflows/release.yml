@@ -25,10 +25,26 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Cache npm packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.41.7"
           channel: "stable"
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-flutter-${{ env.flutter-version }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-${{ env.flutter-version }}-pub-
 
       - name: Install dependencies
         run: npm install -g semantic-release @semantic-release/changelog @semantic-release/exec @semantic-release/git conventional-changelog-conventionalcommits
