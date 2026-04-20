@@ -18,8 +18,7 @@ class FcmMessage {
     this.aps,
   });
 
-  factory FcmMessage.fromJson(Map<String, dynamic> json) =>
-      _$FcmMessageFromJson(json);
+  factory FcmMessage.fromJson(Map<String, dynamic> json) => _$FcmMessageFromJson(json);
 
   Map<String, dynamic> toJson() => _$FcmMessageToJson(this);
 }

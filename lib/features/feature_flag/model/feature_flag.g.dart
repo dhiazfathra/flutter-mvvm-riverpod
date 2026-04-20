@@ -11,25 +11,21 @@ FeatureFlag _$FeatureFlagFromJson(Map<String, dynamic> json) => FeatureFlag(
       value: json['value'] as bool,
     );
 
-Map<String, dynamic> _$FeatureFlagToJson(FeatureFlag instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FeatureFlagToJson(FeatureFlag instance) => <String, dynamic>{
       'key': instance.key,
       'value': instance.value,
     };
 
-FeatureFlagsResponse _$FeatureFlagsResponseFromJson(
-        Map<String, dynamic> json) =>
+FeatureFlagsResponse _$FeatureFlagsResponseFromJson(Map<String, dynamic> json) =>
     FeatureFlagsResponse(
       flags: (json['flags'] as List<dynamic>)
           .map((e) => FeatureFlag.fromJson(e as Map<String, dynamic>))
           .toList(),
-      lastUpdated: json['lastUpdated'] == null
-          ? null
-          : DateTime.parse(json['lastUpdated'] as String),
+      lastUpdated:
+          json['lastUpdated'] == null ? null : DateTime.parse(json['lastUpdated'] as String),
     );
 
-Map<String, dynamic> _$FeatureFlagsResponseToJson(
-        FeatureFlagsResponse instance) =>
+Map<String, dynamic> _$FeatureFlagsResponseToJson(FeatureFlagsResponse instance) =>
     <String, dynamic>{
       'flags': instance.flags,
       'lastUpdated': instance.lastUpdated?.toIso8601String(),

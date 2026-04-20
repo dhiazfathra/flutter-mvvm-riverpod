@@ -2,8 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final pushNotificationViewModelProvider =
-    StateNotifierProvider<PushNotificationViewModel, PushNotificationState>(
-        (ref) {
+    StateNotifierProvider<PushNotificationViewModel, PushNotificationState>((ref) {
   return PushNotificationViewModel();
 });
 

@@ -14,8 +14,7 @@ FcmMessage _$FcmMessageFromJson(Map<String, dynamic> json) => FcmMessage(
       aps: json['aps'] as Map<String, dynamic>?,
     );
 
-Map<String, dynamic> _$FcmMessageToJson(FcmMessage instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FcmMessageToJson(FcmMessage instance) => <String, dynamic>{
       'title': instance.title,
       'body': instance.body,
       'data': instance.data,

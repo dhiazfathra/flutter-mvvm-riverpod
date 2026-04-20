@@ -74,9 +74,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           _passwordController.text,
                         );
                       },
-                child: authState.isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Login'),
+                child:
+                    authState.isLoading ? const CircularProgressIndicator() : const Text('Login'),
               ),
             ),
           ],

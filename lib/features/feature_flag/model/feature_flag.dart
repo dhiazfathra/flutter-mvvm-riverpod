@@ -12,8 +12,7 @@ class FeatureFlag {
     required this.value,
   });
 
-  factory FeatureFlag.fromJson(Map<String, dynamic> json) =>
-      _$FeatureFlagFromJson(json);
+  factory FeatureFlag.fromJson(Map<String, dynamic> json) => _$FeatureFlagFromJson(json);
 
   Map<String, dynamic> toJson() => _$FeatureFlagToJson(this);
 }

@@ -13,8 +13,7 @@ AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) => AuthResponse(
       email: json['email'] as String,
     );
 
-Map<String, dynamic> _$AuthResponseToJson(AuthResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AuthResponseToJson(AuthResponse instance) => <String, dynamic>{
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
       'userId': instance.userId,

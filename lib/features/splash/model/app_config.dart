@@ -16,8 +16,7 @@ class AppConfig {
     this.announcementBody,
   });
 
-  factory AppConfig.fromJson(Map<String, dynamic> json) =>
-      _$AppConfigFromJson(json);
+  factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
 
   Map<String, dynamic> toJson() => _$AppConfigToJson(this);
 

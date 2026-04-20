@@ -28,8 +28,7 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return _dio.get<T>(path,
-        queryParameters: queryParameters, options: options);
+    return _dio.get<T>(path, queryParameters: queryParameters, options: options);
   }
 
   Future<Response<T>> post<T>(
@@ -38,8 +37,7 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return _dio.post<T>(path,
-        data: data, queryParameters: queryParameters, options: options);
+    return _dio.post<T>(path, data: data, queryParameters: queryParameters, options: options);
   }
 
   Future<Response<T>> put<T>(
@@ -48,8 +46,7 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return _dio.put<T>(path,
-        data: data, queryParameters: queryParameters, options: options);
+    return _dio.put<T>(path, data: data, queryParameters: queryParameters, options: options);
   }
 
   Future<Response<T>> delete<T>(
@@ -58,7 +55,6 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) {
-    return _dio.delete<T>(path,
-        data: data, queryParameters: queryParameters, options: options);
+    return _dio.delete<T>(path, data: data, queryParameters: queryParameters, options: options);
   }
 }

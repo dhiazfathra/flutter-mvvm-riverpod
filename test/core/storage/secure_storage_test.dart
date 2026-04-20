@@ -83,15 +83,13 @@ class MockFlutterSecureStorage extends FlutterSecureStorage {
   }
 
   @override
-  void registerListener(
-      {required String key, required void Function(String?) listener}) {}
+  void registerListener({required String key, required void Function(String?) listener}) {}
 
   @override
   void unregisterAllListenersForKey({required String key}) {}
 
   @override
-  void unregisterListener(
-      {required String key, required void Function(String?) listener}) {}
+  void unregisterListener({required String key, required void Function(String?) listener}) {}
 
   @override
   AndroidOptions get aOptions => const AndroidOptions();
