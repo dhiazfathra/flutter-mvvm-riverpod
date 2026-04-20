@@ -24,6 +24,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.13.1
   json_serializable: ^6.13.1
+  dart_code_linter: ^4.0.2
 
 flutter:
   uses-material-design: true

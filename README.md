@@ -32,14 +32,15 @@ lib/
 
 ## Tech Stack
 
-| Component | Library |
-|-----------|---------|
-| State Management | flutter_riverpod |
-| Routing | go_router |
-| HTTP Client | dio |
-| Secure Storage | flutter_secure_storage |
-| Push | firebase_messaging |
-| Code Gen | json_serializable |
+| Component        | Library                |
+| ---------------- | ---------------------- |
+| State Management | flutter_riverpod       |
+| Routing          | go_router              |
+| HTTP Client      | dio                    |
+| Secure Storage   | flutter_secure_storage |
+| Push             | firebase_messaging     |
+| Code Gen         | json_serializable      |
+| Linter           | dart_code_linter       |
 
 ## Getting Started
 
@@ -58,6 +59,15 @@ flutter run
 
 # Test
 flutter test
+
+# Analyze with dart_code_linter
+dart run dart_code_linter:metrics analyze lib
+
+# Check unused code
+dart run dart_code_linter:metrics check-unused-code lib
+
+# Check unused files
+dart run dart_code_linter:metrics check-unused-files lib
 
 # Build web
 flutter build web
