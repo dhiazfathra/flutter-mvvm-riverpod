@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters
+
 import 'app_exception.dart';
 
 class NetworkException extends AppException {
