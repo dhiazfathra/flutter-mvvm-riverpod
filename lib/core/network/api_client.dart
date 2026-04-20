@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'dio_client.dart';
+import 'providers.dart';
 
 class ApiClient {
   ApiClient(this._dioClient);
