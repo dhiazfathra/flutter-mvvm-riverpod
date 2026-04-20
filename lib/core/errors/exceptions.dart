@@ -1,4 +1,4 @@
-// ignore_for_file: use_super_parameters
+// ignore_for_file: use_super_parameters, prefer-match-file-name
 
 import 'app_exception.dart';
 

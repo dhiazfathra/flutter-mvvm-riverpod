@@ -22,6 +22,7 @@ class PushNotificationState {
   }
 }
 
+// ignore: prefer-match-file-name
 class PushNotificationViewModel extends Notifier<PushNotificationState> {
   @override
   PushNotificationState build() {
@@ -48,11 +49,12 @@ class PushNotificationViewModel extends Notifier<PushNotificationState> {
   }
 
   void _handleForegroundMessage(RemoteMessage message) {
-    // Handle foreground messages
+    // Handle foreground messages - no-op for now
   }
 
+  // ignore: avoid_redundant_async, no_empty_block
   static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-    // Handle background messages
+    // Handle background messages - must be async for FirebaseMessaging callback
   }
 
   Future<String?> getToken() async {

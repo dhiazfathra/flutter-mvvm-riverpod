@@ -1,3 +1,4 @@
+// ignore: prefer-match-file-name
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/storage/secure_storage.dart';
@@ -61,6 +62,8 @@ class AuthViewModel extends Notifier<AuthState> {
 
     try {
       await Future<void>.delayed(const Duration(seconds: 1));
+      // email and password would be used in real implementation
+      // ignore: avoid_unused_parameters
 
       const response = AuthResponse(
         accessToken: 'mock_access_token',
@@ -94,7 +97,8 @@ class AuthViewModel extends Notifier<AuthState> {
     state = const AuthState();
   }
 
-  Future<String?> getAccessToken() async {
+  Future<String?> getAccessToken() {
+    // ignore: avoid_redundant_async
     return _secureStorage.getAccessToken();
   }
 }
