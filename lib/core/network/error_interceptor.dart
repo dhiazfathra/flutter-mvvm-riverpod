@@ -6,20 +6,24 @@ import '../errors/exceptions.dart';
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    final customException = mapToCustomException(err);
+    final customException = _mapToCustomException(err);
     final newError = err.copyWith(error: customException);
     handler.next(newError);
   }
 
-  AppException mapToCustomException(DioException err) {
+  AppException _mapToCustomException(DioException err) {
     switch (err.type) {
       case DioExceptionType.connectionError:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
       case DioExceptionType.connectionTimeout:
         return NetworkException(_getErrorMessage(err));
-      default:
+      case DioExceptionType.badResponse:
         return _mapStatusCodeToException(err);
+      case DioExceptionType.cancel:
+      case DioExceptionType.unknown:
+      case DioExceptionType.badCertificate:
+        return NetworkException(_getErrorMessage(err));
     }
   }
 
@@ -61,13 +65,19 @@ class ErrorInterceptor extends Interceptor {
 }
 
 extension DioExceptionExtension on DioException {
-  DioException copyWith({Object? error}) {
+  DioException copyWith({
+    Object? error,
+    DioExceptionType? type,
+    RequestOptions? requestOptions,
+    Response? response,
+    String? message,
+  }) {
     return DioException(
-      type: type,
-      requestOptions: requestOptions,
-      response: response,
+      type: type ?? this.type,
+      requestOptions: requestOptions ?? this.requestOptions,
+      response: response ?? this.response,
       error: error ?? this.error,
-      message: message,
+      message: message ?? this.message,
     );
   }
 }
