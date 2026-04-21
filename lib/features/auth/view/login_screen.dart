@@ -32,6 +32,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
     super.dispose();
   }
 
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final AuthState authState = ref.watch(authViewModelProvider);
@@ -51,12 +57,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       backgroundColor: const Color(0xFFF5F5F5),
       body: Column(
         children: [
-          _buildStatusBar(),
-          _buildNavBar(),
+          const StatusBarWidget(),
+          NavBarWidget(tabController: _tabController),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                children: [_buildWelcomeSection(), _buildFormSection(authState, authViewModel)],
+                children: [
+                  const WelcomeSectionWidget(),
+                  FormSectionWidget(
+                    phoneController: _phoneController,
+                    passwordController: _passwordController,
+                    obscurePassword: _obscurePassword,
+                    authState: authState,
+                    authViewModel: authViewModel,
+                    onTogglePassword: _togglePasswordVisibility,
+                  ),
+                ],
               ),
             ),
           ),
@@ -64,8 +80,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       ),
     );
   }
+}
 
-  Widget _buildStatusBar() {
+class StatusBarWidget extends StatelessWidget {
+  const StatusBarWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 24,
@@ -115,8 +136,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       ),
     );
   }
+}
 
-  Widget _buildNavBar() {
+class NavBarWidget extends StatelessWidget {
+  final TabController tabController;
+
+  const NavBarWidget({super.key, required this.tabController});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 360,
       height: 46,
@@ -125,7 +153,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
         children: [
           Expanded(
             child: TabBar(
-              controller: _tabController,
+              controller: tabController,
               labelColor: const Color(0xFF01AFAF),
               unselectedLabelColor: const Color(0xFF333333),
               indicatorColor: const Color(0xFF01AFAF),
@@ -139,8 +167,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       ),
     );
   }
+}
 
-  Widget _buildWelcomeSection() {
+class WelcomeSectionWidget extends StatelessWidget {
+  const WelcomeSectionWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 328,
       padding: const EdgeInsets.only(top: 17),
@@ -171,8 +204,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       ),
     );
   }
+}
 
-  Widget _buildFormSection(AuthState authState, AuthViewModel authViewModel) {
+class FormSectionWidget extends StatelessWidget {
+  final TextEditingController phoneController;
+  final TextEditingController passwordController;
+  final bool obscurePassword;
+  final AuthState authState;
+  final AuthViewModel authViewModel;
+  final VoidCallback onTogglePassword;
+
+  const FormSectionWidget({
+    super.key,
+    required this.phoneController,
+    required this.passwordController,
+    required this.obscurePassword,
+    required this.authState,
+    required this.authViewModel,
+    required this.onTogglePassword,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 328,
       padding: const EdgeInsets.only(top: 16),
@@ -224,7 +277,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
-                    controller: _phoneController,
+                    controller: phoneController,
                     keyboardType: TextInputType.phone,
                     style: const TextStyle(fontFamily: 'Poppins', fontSize: 12),
                     decoration: const InputDecoration(
@@ -263,8 +316,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
               children: [
                 Expanded(
                   child: TextField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
+                    controller: passwordController,
+                    obscureText: obscurePassword,
                     style: const TextStyle(fontFamily: 'Poppins', fontSize: 12),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
@@ -280,15 +333,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                 ),
                 IconButton(
                   icon: Icon(
-                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    obscurePassword ? Icons.visibility_off : Icons.visibility,
                     size: 16,
                     color: const Color(0xFF333333),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
+                  onPressed: onTogglePassword,
                 ),
               ],
             ),
@@ -301,7 +350,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
               onPressed: authState.isLoading
                   ? null
                   : () {
-                      authViewModel.login(_phoneController.text, _passwordController.text);
+                      authViewModel.login(phoneController.text, passwordController.text);
                     },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFE2E2E2),
