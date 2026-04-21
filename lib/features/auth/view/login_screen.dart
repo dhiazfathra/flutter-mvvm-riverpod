@@ -311,10 +311,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                   ? const SizedBox(
                       width: 20,
                       height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                     )
                   : const Text(
                       'Lanjutkan',

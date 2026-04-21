@@ -102,7 +102,3 @@ class AuthViewModel extends Notifier<AuthState> {
     return _secureStorage.getAccessToken();
   }
 }
-
-final authStateProvider = Provider<AuthState>((ref) {
-  return ref.watch(authViewModelProvider);
-});

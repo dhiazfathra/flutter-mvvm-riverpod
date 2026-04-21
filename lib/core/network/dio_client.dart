@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import '../constants/app_constants.dart';
 import '../storage/secure_storage.dart';
 import 'api_interceptors.dart';
+import 'error_interceptor.dart';
 
 class DioClient {
   DioClient({required SecureStorage secureStorage})
@@ -16,6 +17,7 @@ class DioClient {
         ),
       ) {
     _dio.interceptors.addAll([
+      ErrorInterceptor(),
       ApiInterceptors(_secureStorage, _dio),
       LogInterceptor(requestBody: true, responseBody: true),
     ]);
