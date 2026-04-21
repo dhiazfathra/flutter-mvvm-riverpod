@@ -61,6 +61,10 @@ class ErrorInterceptor extends Interceptor {
       return ServerException(responseText ?? 'Server error', statusCode);
     }
 
+    if (statusCode >= 400) {
+      return ServerException(responseText ?? 'Request failed', statusCode);
+    }
+
     return NetworkException(_getErrorMessage(err));
   }
 
