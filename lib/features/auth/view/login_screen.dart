@@ -308,7 +308,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               ),
               child: authState.isLoading
-                  ? const CircularProgressIndicator()
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
                   : const Text(
                       'Lanjutkan',
                       style: TextStyle(
