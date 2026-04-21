@@ -1,8 +1,7 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_mvvm_riverpod/core/errors/exceptions.dart';
 import 'package:flutter_mvvm_riverpod/core/network/error_interceptor.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ErrorInterceptor', () {
@@ -202,7 +201,7 @@ void main() {
         interceptor.onError(exception, handler);
 
         expect(capturedError!.error, isA<ServerException>());
-        expect((capturedError!.error as ServerException).code, 500);
+        expect((capturedError!.error! as ServerException).code, 500);
       });
 
       test('maps 503 to ServerException', () {
@@ -224,7 +223,7 @@ void main() {
         interceptor.onError(exception, handler);
 
         expect(capturedError!.error, isA<ServerException>());
-        expect((capturedError!.error as ServerException).code, 503);
+        expect((capturedError!.error! as ServerException).code, 503);
       });
 
       test('maps cancel to NetworkException', () {
@@ -244,10 +243,7 @@ void main() {
       });
 
       test('maps unknown to NetworkException', () {
-        final exception = DioException(
-          type: DioExceptionType.unknown,
-          requestOptions: RequestOptions(path: '/test'),
-        );
+        final exception = DioException(requestOptions: RequestOptions(path: '/test'));
 
         DioException? capturedError;
         final handler = _MockErrorInterceptorHandler((error) {
@@ -350,9 +346,9 @@ void main() {
 }
 
 class _MockErrorInterceptorHandler extends ErrorInterceptorHandler {
-  final void Function(DioException) callback;
-
   _MockErrorInterceptorHandler(this.callback);
+
+  final void Function(DioException) callback;
 
   @override
   void next(DioException err) {

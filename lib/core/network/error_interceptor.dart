@@ -6,8 +6,8 @@ import '../errors/exceptions.dart';
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    final customException = _mapToCustomException(err);
-    final newError = err.copyWith(error: customException);
+    final AppException customException = _mapToCustomException(err);
+    final DioException newError = err.copyWith(error: customException);
     handler.next(newError);
   }
 
@@ -28,19 +28,20 @@ class ErrorInterceptor extends Interceptor {
   }
 
   AppException _mapStatusCodeToException(DioException err) {
-    final statusCode = err.response?.statusCode;
-    final data = err.response?.data;
-    final responseText = data is String ? data : data?.toString();
+    final int? statusCode = err.response?.statusCode;
+    final Object? data = err.response?.data;
+    final String? responseText = data is String ? data : data?.toString();
 
     if (statusCode == null) {
       return NetworkException(_getErrorMessage(err));
     }
 
     if (statusCode == 401) {
-      final text = responseText?.toLowerCase() ?? '';
+      final String text = responseText?.toLowerCase() ?? '';
       if (text.contains('expired') || text.contains('token')) {
         return TokenExpiredException(responseText ?? 'Token expired');
       }
+
       return AuthException(responseText ?? 'Unauthorized');
     }
 
