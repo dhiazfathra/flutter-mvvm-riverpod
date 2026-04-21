@@ -147,7 +147,7 @@ void main() {
           response: Response(
             requestOptions: RequestOptions(path: '/test'),
             statusCode: 401,
-            data: {'errorCode': 'TOKEN_EXPIRED', 'message': 'Unauthorized'},
+            data: <String, dynamic>{'errorCode': 'TOKEN_EXPIRED', 'message': 'Nope'},
           ),
         );
 
