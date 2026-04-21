@@ -140,7 +140,28 @@ void main() {
         expect(capturedError!.error, isA<TokenExpiredException>());
       });
 
-      test('maps 401 with token message to TokenExpiredException', () {
+      test('maps 401 with TOKEN_EXPIRED error code to TokenExpiredException', () {
+        final exception = DioException(
+          type: DioExceptionType.badResponse,
+          requestOptions: RequestOptions(path: '/test'),
+          response: Response(
+            requestOptions: RequestOptions(path: '/test'),
+            statusCode: 401,
+            data: {'errorCode': 'TOKEN_EXPIRED', 'message': 'Unauthorized'},
+          ),
+        );
+
+        DioException? capturedError;
+        final handler = _MockErrorInterceptorHandler((error) {
+          capturedError = error;
+        });
+
+        interceptor.onError(exception, handler);
+
+        expect(capturedError!.error, isA<TokenExpiredException>());
+      });
+
+      test('maps 401 with token message to AuthException', () {
         final exception = DioException(
           type: DioExceptionType.badResponse,
           requestOptions: RequestOptions(path: '/test'),
@@ -158,7 +179,7 @@ void main() {
 
         interceptor.onError(exception, handler);
 
-        expect(capturedError!.error, isA<TokenExpiredException>());
+        expect(capturedError!.error, isA<AuthException>());
       });
 
       test('maps 422 to ValidationException', () {

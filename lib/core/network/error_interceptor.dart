@@ -38,7 +38,11 @@ class ErrorInterceptor extends Interceptor {
 
     if (statusCode == 401) {
       final String text = responseText?.toLowerCase() ?? '';
-      if (text.contains('expired') || text.contains('token')) {
+      final bool hasExpiryIndicator =
+          text.contains('expired') ||
+          text.contains('token_expired') ||
+          _hasErrorCodeExpiry(err.response?.data);
+      if (hasExpiryIndicator) {
         return TokenExpiredException(responseText ?? 'Token expired');
       }
 
@@ -60,6 +64,14 @@ class ErrorInterceptor extends Interceptor {
     return NetworkException(_getErrorMessage(err));
   }
 
+  bool _hasErrorCodeExpiry(Object? data) {
+    if (data is! Map<String, dynamic>) {
+      return false;
+    }
+    final String errorCode = data['errorCode']?.toString().toLowerCase() ?? '';
+    return errorCode == 'token_expired';
+  }
+
   String _getErrorMessage(DioException err) {
     return err.error?.toString() ?? 'An error occurred';
   }
@@ -72,6 +84,7 @@ extension DioExceptionExtension on DioException {
     RequestOptions? requestOptions,
     Response<dynamic>? response,
     String? message,
+    StackTrace? stackTrace,
   }) {
     return DioException(
       type: type ?? this.type,
@@ -79,6 +92,7 @@ extension DioExceptionExtension on DioException {
       response: response ?? this.response,
       error: error ?? this.error,
       message: message ?? this.message,
+      stackTrace: stackTrace ?? this.stackTrace,
     );
   }
 }
