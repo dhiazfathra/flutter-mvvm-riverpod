@@ -1,6 +1,6 @@
 # Style Guide
 
-This document outlines the coding conventions and best practices for the Flutter MVVM Riverpod project.
+Please follow [Flutter's official style guide](https://github.com/flutter/blob/master/docs/contributing/Style-guide-for-Flutter-repo.md). This document outlines additional coding conventions and best practices for this Flutter project, in addition to it.
 
 ## Widget Construction
 
@@ -75,3 +75,4 @@ ClassWidget
 
 - https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html
 - https://pub.dev/packages/functional_widget (code generation solution if preferring functions)
+- https://stackoverflow.com/a/53234826
